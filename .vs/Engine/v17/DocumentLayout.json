@@ -1,12 +1,37 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "E:\\Programming\\Graficos Engine - Luchelli \u0026 Sala\\Engine\\",
-  "Documents": [],
+  "WorkspaceRootPath": "E:\\Programming\\Graficos Engine - Luchelli \u0026 Sala\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{E624E556-F29B-4DAA-A5F7-01BD98FB98C4}|Graphics Engine\\Graphics Engine.vcxproj|E:\\Programming\\Graficos Engine - Luchelli \u0026 Sala\\Graphics Engine\\src\\Application.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{E624E556-F29B-4DAA-A5F7-01BD98FB98C4}|Graphics Engine\\Graphics Engine.vcxproj|solutionrelative:Graphics Engine\\src\\Application.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Application.cpp",
+              "DocumentMoniker": "E:\\Programming\\Graficos Engine - Luchelli \u0026 Sala\\Graphics Engine\\src\\Application.cpp",
+              "RelativeDocumentMoniker": "Graphics Engine\\src\\Application.cpp",
+              "ToolTip": "E:\\Programming\\Graficos Engine - Luchelli \u0026 Sala\\Graphics Engine\\src\\Application.cpp",
+              "RelativeToolTip": "Graphics Engine\\src\\Application.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-08-19T14:33:57.663Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }
