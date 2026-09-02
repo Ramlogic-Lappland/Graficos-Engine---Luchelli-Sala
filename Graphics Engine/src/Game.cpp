@@ -1,16 +1,4 @@
-#include "BaseGame.h"
-
-class Game : public BaseGame 
-{
-public:
-    void Init() override {}
-    void Update() override {}
-    void Draw() override 
-    {
-        renderer.DrawLegacyTriangle(); // Llamado de prueba
-    }
-    void DeInit() override {}
-};
+#include "Game.h"
 
 int main() 
 {

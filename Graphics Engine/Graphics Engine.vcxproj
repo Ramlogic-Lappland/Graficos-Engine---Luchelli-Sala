@@ -145,6 +145,7 @@
     <ClInclude Include="src\BaseGame.h" />
     <ClInclude Include="src\Entity.h" />
     <ClInclude Include="src\Entity2D.h" />
+    <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\Window.h" />
   </ItemGroup>

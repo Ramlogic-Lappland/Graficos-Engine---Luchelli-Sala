@@ -10,4 +10,5 @@ public:
     void SwapBuffers(Window* window);
 
     void DrawLegacyTriangle(); // TEMPORAL
+    void DrawBufferTriangle();
 };
