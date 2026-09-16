@@ -7,6 +7,10 @@
       "RelativeMoniker": "D:0:0:{E624E556-F29B-4DAA-A5F7-01BD98FB98C4}|Graphics Engine\\Graphics Engine.vcxproj|solutionrelative:Graphics Engine\\src\\Renderer.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{E624E556-F29B-4DAA-A5F7-01BD98FB98C4}|Graphics Engine\\Graphics Engine.vcxproj|E:\\Programming\\Graficos Engine - Luchelli \u0026 Sala\\Graphics Engine\\src\\Renderer.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{E624E556-F29B-4DAA-A5F7-01BD98FB98C4}|Graphics Engine\\Graphics Engine.vcxproj|solutionrelative:Graphics Engine\\src\\Renderer.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{E624E556-F29B-4DAA-A5F7-01BD98FB98C4}|Graphics Engine\\Graphics Engine.vcxproj|E:\\Programming\\Graficos Engine - Luchelli \u0026 Sala\\Graphics Engine\\src\\BaseGame.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{E624E556-F29B-4DAA-A5F7-01BD98FB98C4}|Graphics Engine\\Graphics Engine.vcxproj|solutionrelative:Graphics Engine\\src\\BaseGame.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
@@ -21,10 +25,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{E624E556-F29B-4DAA-A5F7-01BD98FB98C4}|Graphics Engine\\Graphics Engine.vcxproj|E:\\Programming\\Graficos Engine - Luchelli \u0026 Sala\\Graphics Engine\\src\\Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{E624E556-F29B-4DAA-A5F7-01BD98FB98C4}|Graphics Engine\\Graphics Engine.vcxproj|solutionrelative:Graphics Engine\\src\\Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E624E556-F29B-4DAA-A5F7-01BD98FB98C4}|Graphics Engine\\Graphics Engine.vcxproj|E:\\Programming\\Graficos Engine - Luchelli \u0026 Sala\\Graphics Engine\\src\\Renderer.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{E624E556-F29B-4DAA-A5F7-01BD98FB98C4}|Graphics Engine\\Graphics Engine.vcxproj|solutionrelative:Graphics Engine\\src\\Renderer.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,7 +38,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "Game.h",
               "DocumentMoniker": "E:\\Programming\\Graficos Engine - Luchelli \u0026 Sala\\Graphics Engine\\src\\Game.h",
               "RelativeDocumentMoniker": "Graphics Engine\\src\\Game.h",
@@ -46,12 +46,11 @@
               "RelativeToolTip": "Graphics Engine\\src\\Game.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2026-09-02T15:11:46.709Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-02T15:11:46.709Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "Game.cpp",
               "DocumentMoniker": "E:\\Programming\\Graficos Engine - Luchelli \u0026 Sala\\Graphics Engine\\src\\Game.cpp",
               "RelativeDocumentMoniker": "Graphics Engine\\src\\Game.cpp",
@@ -59,12 +58,11 @@
               "RelativeToolTip": "Graphics Engine\\src\\Game.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-09-02T13:35:48.19Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-02T13:35:48.19Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "BaseGame.cpp",
               "DocumentMoniker": "E:\\Programming\\Graficos Engine - Luchelli \u0026 Sala\\Graphics Engine\\src\\BaseGame.cpp",
               "RelativeDocumentMoniker": "Graphics Engine\\src\\BaseGame.cpp",
@@ -72,12 +70,11 @@
               "RelativeToolTip": "Graphics Engine\\src\\BaseGame.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-09-02T15:01:11.22Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-02T15:01:11.22Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "BaseGame.h",
               "DocumentMoniker": "E:\\Programming\\Graficos Engine - Luchelli \u0026 Sala\\Graphics Engine\\src\\BaseGame.h",
               "RelativeDocumentMoniker": "Graphics Engine\\src\\BaseGame.h",
@@ -85,8 +82,7 @@
               "RelativeToolTip": "Graphics Engine\\src\\BaseGame.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2026-09-02T15:01:04.86Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-02T15:01:04.86Z"
             },
             {
               "$type": "Document",
@@ -96,23 +92,22 @@
               "RelativeDocumentMoniker": "Graphics Engine\\src\\Renderer.cpp",
               "ToolTip": "E:\\Programming\\Graficos Engine - Luchelli \u0026 Sala\\Graphics Engine\\src\\Renderer.cpp",
               "RelativeToolTip": "Graphics Engine\\src\\Renderer.cpp",
-              "ViewState": "AgIAACEAAAAAAAAAAAAAAD0AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAFsAAAAAAAAAAAAqwHIAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2026-09-02T13:36:07.227Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 1,
               "Title": "Renderer.h",
               "DocumentMoniker": "E:\\Programming\\Graficos Engine - Luchelli \u0026 Sala\\Graphics Engine\\src\\Renderer.h",
               "RelativeDocumentMoniker": "Graphics Engine\\src\\Renderer.h",
               "ToolTip": "E:\\Programming\\Graficos Engine - Luchelli \u0026 Sala\\Graphics Engine\\src\\Renderer.h",
               "RelativeToolTip": "Graphics Engine\\src\\Renderer.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAqAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2026-09-02T15:00:52.393Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-02T15:00:52.393Z"
             }
           ]
         }
