@@ -3,7 +3,7 @@
 int main() 
 {
     Game myGame;
-    if (myGame.Startup(860, 620, "Engine Graficos I")) 
+    if (myGame.Startup(860, 620, "Engine Graficos I"))
     {
         myGame.Run();
     }

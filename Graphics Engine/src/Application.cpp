@@ -14,7 +14,7 @@
 //         return -1;
 // 
 //     /* Create a windowed mode window and its OpenGL context */
-//     window = glfwCreateWindow(860, 620, "Engine", NULL, NULL);
+//     window = glfwCreateWindow(860, 620, Engine, NULL, NULL);
 //     if (!window)
 //     {
 //         glfwTerminate();
@@ -26,7 +26,7 @@
 // 
 // 
 //     if (glewInit() != GLEW_OK)
-//         std::cout << "Error Initializing GLEW" << std::endl;
+//         std::cout << Error Initializing GLEW << std::endl;
 // 
 // 
 //     /* Loop until the user closes the window */
