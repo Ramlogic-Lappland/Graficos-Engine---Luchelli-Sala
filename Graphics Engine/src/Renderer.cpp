@@ -99,6 +99,7 @@ bool Renderer::Init(Window* window)
 
     // 1. Vincular el contexto de OpenGL al hilo actual
     glfwMakeContextCurrent(window->GetHandle());
+    glfwSwapInterval(1);
 
     // 2. Inicializar GLEW para cargar los punteros de funciones de OpenGL
     glewExperimental = GL_TRUE;
@@ -129,6 +130,10 @@ void Renderer::SwapBuffers(Window* window)
 
 void Renderer::DrawBufferTriangle()
 {
+    float r = 0.2f;
+    float g = 0.3f;
+    float b = 0.8f;
+
     float positions[] =
     {
         -0.5f, -0.5f,
@@ -160,6 +165,10 @@ void Renderer::DrawBufferTriangle()
 
     shader = CreateShader(source.VertexSource, source.FragmentSource);
     glUseProgram(shader);
+
+    int location = glGetUniformLocation(shader, "u_Color");
+    _ASSERT(location != 1);
+    glUniform4f(location, r, g, b, 1.0f);
 
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
     //glDrawArrays(GL_TRIANGLES, 0, 3);
