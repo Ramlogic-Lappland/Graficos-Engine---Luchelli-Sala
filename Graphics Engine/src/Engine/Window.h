@@ -1,15 +1,16 @@
 #pragma once
 struct GLFWwindow;
 
-class Window 
+class Window
 {
 private:
-    GLFWwindow* windowHandle;
+    GLFWwindow* windowHandle = nullptr;
 
 public:
     bool Init(int width, int height, const char* title);
-    bool ShouldClose();
+    bool ShouldClose() const;
     void PollEvents();
+    void SwapBuffers();
     GLFWwindow* GetHandle() const { return windowHandle; }
     void Destroy();
 };
