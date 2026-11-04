@@ -26,6 +26,14 @@ bool Window::Init(int width, int height, const char* title)
     return true;
 }
 
+void Window::SwapBuffers()
+{
+    if (windowHandle != nullptr)
+    {
+        glfwSwapBuffers(windowHandle);
+    }
+}
+
 bool Window::ShouldClose() const
 {
     return glfwWindowShouldClose(windowHandle);

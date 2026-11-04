@@ -1,7 +1,10 @@
 #pragma once
+
+#include "EngineAPI.h"
+
 struct GLFWwindow;
 
-class Window
+class ENGINE_API Window
 {
 private:
     GLFWwindow* windowHandle = nullptr;

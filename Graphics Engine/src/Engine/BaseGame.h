@@ -1,21 +1,40 @@
-// BaseGame.h
 #pragma once
+
+#include "EngineAPI.h"
 #include "Window.h"
 #include "Renderer.h"
+#include "Shape.h"
 
-class BaseGame 
+#include <memory>
+#include <vector>
+
+class ENGINE_API BaseGame
 {
-protected:
-    Window window;     // Composición
-    Renderer renderer; // Composición
-
 public:
+    BaseGame();
+    virtual ~BaseGame();
+
+    // Prevent copying or moving the engine instance for C2280 Error of NULL_ptr
+    BaseGame(const BaseGame&) = delete;
+    BaseGame& operator=(const BaseGame&) = delete;
+
+    BaseGame(BaseGame&&) = delete;
+    BaseGame& operator=(BaseGame&&) = delete;
+
     bool Startup(int width, int height, const char* title);
     void Run();
 
-    // Métodos virtuales para que 'Game' (EXE) los sobrescriba
-    virtual void Init() = 0;
-    virtual void Update() = 0;
-    virtual void Draw() = 0;
-    virtual void DeInit() = 0;
+protected:
+    virtual void OnInit() {}
+    virtual void OnUpdate(float deltaTime) {}
+    virtual void OnRender() {}
+    virtual void OnDeInit() {}
+
+    Shape* CreateTriangle(float r, float g, float b);
+    Shape* CreateSquare(float r, float g, float b);
+
+    Window window;
+    Renderer renderer;
+
+    std::vector<std::unique_ptr<Entity>> entities;
 };

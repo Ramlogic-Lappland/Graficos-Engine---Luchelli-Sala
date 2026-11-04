@@ -13,19 +13,17 @@ Shape::Shape(const std::vector<float>& vertices,const std::vector<unsigned int>&
 
     glEnableVertexAttribArray(0);
 
-    glVertexAttribPointer
-    (
+    glVertexAttribPointer(
         0,
         2,
         GL_FLOAT,
         GL_FALSE,
-        sizeof(float) * 2,
+        2 * sizeof(float),
         nullptr
     );
 
     vertexArray.Unbind();
     vertexBuffer.Unbind();
-    indexBuffer.Unbind();
 }
 
 void Shape::Draw(Renderer& renderer)

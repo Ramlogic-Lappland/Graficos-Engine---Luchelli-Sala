@@ -1,7 +1,7 @@
 #pragma once
 #include "Entity.h"
 
-class Entity2D : public Entity
+class ENGINE_API Entity2D : public Entity
 {
 protected:
     float posX, posY;

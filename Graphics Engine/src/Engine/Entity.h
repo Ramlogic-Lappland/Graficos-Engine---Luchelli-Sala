@@ -1,8 +1,10 @@
 #pragma once
 
-class Renderer; // Temp
+#include "EngineAPI.h"
 
-class Entity 
+class Renderer;
+
+class ENGINE_API Entity
 {
 protected:
     bool active;
@@ -12,8 +14,8 @@ public:
     virtual ~Entity() = default;
 
     virtual void Update(float deltaTime);
-    virtual void Draw(Renderer* renderer) = 0; // Virtual Method to evad instantiating 
+    virtual void Draw(Renderer& renderer) = 0;
 
-    bool IsActive() { return active; }
+    bool IsActive() const { return active; }
     void SetActive(bool state) { active = state; }
 };

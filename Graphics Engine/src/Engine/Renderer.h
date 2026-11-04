@@ -8,7 +8,7 @@ class Shape;
 class ENGINE_API Renderer
 {
 public:
-    bool Init(Window& window);
+    bool Init(Window* window);
     void Shutdown();
 
     void Clear
