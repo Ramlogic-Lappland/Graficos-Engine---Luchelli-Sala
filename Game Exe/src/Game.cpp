@@ -8,12 +8,15 @@ void Game::OnInit()
 
 void Game::OnUpdate(float deltaTime)
 {
+   
 }
 
 void Game::OnRender()
 {
+
 }
 
 void Game::OnDeInit()
 {
+    
 }

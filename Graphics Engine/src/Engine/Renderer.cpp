@@ -13,6 +13,7 @@
 #include <vector>
 
 
+
 namespace
 {
     struct ShaderProgramSource
@@ -64,9 +65,7 @@ namespace
         return { ss[0].str(), ss[1].str() };
     }
 
-    unsigned int CompileShader(
-        unsigned int type,
-        const std::string& source)
+    unsigned int CompileShader(unsigned int type,const std::string& source)
     {
         unsigned int id = glCreateShader(type);
 
@@ -96,10 +95,9 @@ namespace
             }
 
             std::cerr << "Failed to compile "
-                << (type == GL_VERTEX_SHADER
-                    ? "vertex"
-                    : "fragment")
-                << " shader!" << std::endl;
+                      << (type == GL_VERTEX_SHADER
+                          ? "vertex": "fragment")
+                      << " shader!" << std::endl;
 
             glDeleteShader(id);
             return 0;
@@ -108,18 +106,14 @@ namespace
         return id;
     }
 
-    unsigned int CreateShader(
-        const std::string& vertexShader,
-        const std::string& fragmentShader)
+    unsigned int CreateShader( const std::string& vertexShader,const std::string& fragmentShader)
     {
-        unsigned int vs = CompileShader(
-            GL_VERTEX_SHADER, vertexShader);
+        unsigned int vs = CompileShader(GL_VERTEX_SHADER, vertexShader);
 
         if (vs == 0)
             return 0;
 
-        unsigned int fs = CompileShader(
-            GL_FRAGMENT_SHADER, fragmentShader);
+        unsigned int fs = CompileShader(GL_FRAGMENT_SHADER, fragmentShader);
 
         if (fs == 0)
         {
@@ -147,14 +141,12 @@ namespace
         if (result == GL_FALSE)
         {
             int length = 0;
-            glGetProgramiv(
-                program, GL_INFO_LOG_LENGTH, &length);
+            glGetProgramiv(program, GL_INFO_LOG_LENGTH, &length);
 
             if (length > 0)
             {
                 std::vector<char> message(length);
-                glGetProgramInfoLog(
-                    program, length, nullptr, message.data());
+                glGetProgramInfoLog(program, length, nullptr, message.data());
 
                 std::cerr << message.data() << std::endl;
             }
@@ -193,15 +185,14 @@ bool Renderer::Init(Window* window)
     if (glewError != GLEW_OK)
     {
         std::cerr << "Failed to initialize GLEW: "
-            << glewGetErrorString(glewError)
-            << std::endl;
+                  << glewGetErrorString(glewError)
+                  << std::endl;
         return false;
     }
 
     int width, height;
 
-    glfwGetFramebufferSize(
-        window->GetHandle(), &width, &height);
+    glfwGetFramebufferSize(window->GetHandle(), &width, &height);
 
     glViewport(0, 0, width, height);
 
@@ -216,11 +207,10 @@ bool Renderer::Init(Window* window)
     std::cout << "Working Directory: "<< std::filesystem::current_path()<< std::endl;
     ShaderProgramSource source = ParseShader("res/shaders/Shader.shader");
 
-    if (source.VertexSource.empty() ||
-        source.FragmentSource.empty())
+    if (source.VertexSource.empty() || source.FragmentSource.empty())
     {
         std::cerr << "Shader source is empty!"
-            << std::endl;
+                  << std::endl;
         return false;
     }
 
@@ -229,17 +219,16 @@ bool Renderer::Init(Window* window)
     if (shader == 0)
     {
         std::cerr << "Failed to create shader program!"
-            << std::endl;
+                  << std::endl;
         return false;
     }
 
-    colorLocation = glGetUniformLocation(
-        shader, "u_Color");
+    colorLocation = glGetUniformLocation(shader, "u_Color");
 
     if (colorLocation == -1)
     {
         std::cerr << "Warning: u_Color not found!"
-            << std::endl;
+                  << std::endl;
     }
 
     return true;

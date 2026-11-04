@@ -45,9 +45,7 @@ void BaseGame::Run()
     {
         auto currentTime = Clock::now();
 
-        float deltaTime = std::chrono::duration<float>(
-            currentTime - previousTime
-        ).count();
+        float deltaTime = std::chrono::duration<float>(currentTime - previousTime).count();
 
         previousTime = currentTime;
 
@@ -109,7 +107,8 @@ Shape* BaseGame::CreateTriangle(float r, float g, float b)
         0, 1, 2
     };
 
-    auto shape = std::make_unique<Shape>(
+    auto shape = std::make_unique<Shape>
+    (
         vertices,
         indices,
         r, g, b

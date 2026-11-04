@@ -13,7 +13,8 @@ Shape::Shape(const std::vector<float>& vertices,const std::vector<unsigned int>&
 
     glEnableVertexAttribArray(0);
 
-    glVertexAttribPointer(
+    glVertexAttribPointer
+    (
         0,
         2,
         GL_FLOAT,

@@ -1,16 +1,14 @@
 #include "IndexBuffer.h"
 #include <GL/glew.h>
 
-IndexBuffer::IndexBuffer(
-    const unsigned int* data,
-    unsigned int count)
-    : count(count)
+IndexBuffer::IndexBuffer(const unsigned int* data,unsigned int count): count(count)
 {
     glGenBuffers(1, &id);
 
     glBindBuffer(GL_COPY_WRITE_BUFFER, id);
 
-    glBufferData(
+    glBufferData
+    (
         GL_COPY_WRITE_BUFFER,
         count * sizeof(unsigned int),
         data,

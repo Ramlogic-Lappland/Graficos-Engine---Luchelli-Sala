@@ -20,7 +20,8 @@ struct Color
 class ENGINE_API Shape : public Entity2D
 {
 public:
-    Shape(
+    Shape
+    (
         const std::vector<float>& vertices,
         const std::vector<unsigned int>& indices,
         float r,
