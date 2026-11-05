@@ -10,6 +10,11 @@ BaseGame::BaseGame() = default;
 
 BaseGame::~BaseGame() = default;
 
+Camera2D& BaseGame::GetCamera()
+{
+    return camera;
+}
+
 
 bool BaseGame::Startup(int width, int height, const char* title)
 {
@@ -28,6 +33,11 @@ bool BaseGame::Startup(int width, int height, const char* title)
 
         return false;
     }
+
+    int framebufferWidth = 0;
+    int framebufferHeight = 0;
+    window.GetFramebufferSize(framebufferWidth, framebufferHeight);
+    camera.SetViewportSize(framebufferWidth, framebufferHeight);
 
     OnInit();
 
@@ -65,7 +75,13 @@ void BaseGame::Run()
             }
         }
 
+        int framebufferWidth = 0;
+        int framebufferHeight = 0;
+        window.GetFramebufferSize(framebufferWidth, framebufferHeight);
+        camera.SetViewportSize(framebufferWidth, framebufferHeight);
+
         renderer.Clear(0.1f, 0.1f, 0.1f, 1.0f);
+        renderer.ApplyCamera(camera);
 
         // Draw all active entities
         const size_t drawCount = entities.size();
@@ -108,11 +124,11 @@ Shape* BaseGame::CreateTriangle(float r, float g, float b)
     };
 
     auto shape = std::make_unique<Shape>
-    (
-        vertices,
-        indices,
-        r, g, b
-    );
+        (
+            vertices,
+            indices,
+            r, g, b
+        );
 
     Shape* result = shape.get();
 
@@ -139,11 +155,11 @@ Shape* BaseGame::CreateSquare(float r, float g, float b)
     };
 
     auto shape = std::make_unique<Shape>
-    (
-        vertices,
-        indices,
-        r, g, b
-    );
+        (
+            vertices,
+            indices,
+            r, g, b
+        );
 
     Shape* result = shape.get();
 

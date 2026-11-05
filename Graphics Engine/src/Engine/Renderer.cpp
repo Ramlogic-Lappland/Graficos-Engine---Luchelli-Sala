@@ -1,6 +1,7 @@
 #include "Renderer.h"
 #include "Window.h"
 #include "Shape.h"
+#include "Camera2D.h"
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -11,6 +12,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <glm/gtc/type_ptr.hpp>
 
 
 
@@ -65,7 +67,7 @@ namespace
         return { ss[0].str(), ss[1].str() };
     }
 
-    unsigned int CompileShader(unsigned int type,const std::string& source)
+    unsigned int CompileShader(unsigned int type, const std::string& source)
     {
         unsigned int id = glCreateShader(type);
 
@@ -95,9 +97,9 @@ namespace
             }
 
             std::cerr << "Failed to compile "
-                      << (type == GL_VERTEX_SHADER
-                          ? "vertex": "fragment")
-                      << " shader!" << std::endl;
+                << (type == GL_VERTEX_SHADER
+                    ? "vertex" : "fragment")
+                << " shader!" << std::endl;
 
             glDeleteShader(id);
             return 0;
@@ -106,7 +108,7 @@ namespace
         return id;
     }
 
-    unsigned int CreateShader( const std::string& vertexShader,const std::string& fragmentShader)
+    unsigned int CreateShader(const std::string& vertexShader, const std::string& fragmentShader)
     {
         unsigned int vs = CompileShader(GL_VERTEX_SHADER, vertexShader);
 
@@ -185,8 +187,8 @@ bool Renderer::Init(Window* window)
     if (glewError != GLEW_OK)
     {
         std::cerr << "Failed to initialize GLEW: "
-                  << glewGetErrorString(glewError)
-                  << std::endl;
+            << glewGetErrorString(glewError)
+            << std::endl;
         return false;
     }
 
@@ -197,38 +199,41 @@ bool Renderer::Init(Window* window)
     glViewport(0, 0, width, height);
 
     // Update viewport when the window is resized
-    glfwSetFramebufferSizeCallback(window->GetHandle(),[](GLFWwindow*, int w, int h)
+    glfwSetFramebufferSizeCallback(window->GetHandle(), [](GLFWwindow*, int w, int h)
         {
             glViewport(0, 0, w, h);
         }
     );
 
     // Compile and link the shader
-    std::cout << "Working Directory: "<< std::filesystem::current_path()<< std::endl;
+    std::cout << "Working Directory: " << std::filesystem::current_path() << std::endl;
     ShaderProgramSource source = ParseShader("res/shaders/Shader.shader");
 
     if (source.VertexSource.empty() || source.FragmentSource.empty())
     {
         std::cerr << "Shader source is empty!"
-                  << std::endl;
+            << std::endl;
         return false;
     }
 
-    shader = CreateShader(source.VertexSource,source.FragmentSource);
+    shader = CreateShader(source.VertexSource, source.FragmentSource);
 
     if (shader == 0)
     {
         std::cerr << "Failed to create shader program!"
-                  << std::endl;
+            << std::endl;
         return false;
     }
 
     colorLocation = glGetUniformLocation(shader, "u_Color");
+    modelLocation = glGetUniformLocation(shader, "u_Model");
+    viewLocation = glGetUniformLocation(shader, "u_View");
+    projectionLocation = glGetUniformLocation(shader, "u_Projection");
 
     if (colorLocation == -1)
     {
         std::cerr << "Warning: u_Color not found!"
-                  << std::endl;
+            << std::endl;
     }
 
     return true;
@@ -239,6 +244,25 @@ void Renderer::Clear(float r, float g, float b, float a)
 {
     glClearColor(r, g, b, a);
     glClear(GL_COLOR_BUFFER_BIT);
+}
+
+void Renderer::ApplyCamera(const Camera2D& camera)
+{
+    if (shader == 0)
+        return;
+
+    const glm::mat4 view = camera.GetViewMatrix();
+    const glm::mat4 projection = camera.GetProjectionMatrix();
+
+    glUseProgram(shader);
+
+    if (viewLocation != -1)
+        glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
+
+    if (projectionLocation != -1)
+        glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(projection));
+
+    glUseProgram(0);
 }
 
 // Draw an already defined SHAPE
@@ -261,6 +285,13 @@ void Renderer::Draw(const Shape& shape)
             color.b,
             color.a
         );
+    }
+
+    // Upload this shape's model matrix before issuing its draw call.
+    if (modelLocation != -1)
+    {
+        const glm::mat4 model = shape.GetModelMatrix();
+        glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(model));
     }
 
     shape.GetVertexArray().Bind();
@@ -289,4 +320,7 @@ void Renderer::Shutdown()
     }
 
     colorLocation = -1;
+    modelLocation = -1;
+    viewLocation = -1;
+    projectionLocation = -1;
 }

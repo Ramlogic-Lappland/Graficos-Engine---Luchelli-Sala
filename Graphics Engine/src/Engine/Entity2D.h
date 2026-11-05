@@ -1,5 +1,6 @@
 #pragma once
 #include "Entity.h"
+#include <glm/glm.hpp>
 
 class ENGINE_API Entity2D : public Entity
 {
@@ -16,9 +17,11 @@ public:
     void SetRotation(float angle);
     void SetScale(float sx, float sy);
 
-    float GetPosX() { return posX; }
-    float GetPosY() { return posY; }
-    float GetRotation() { return rotation; }
-    float GetScaleX() { return scaleX; }
-    float GetScaleY() { return scaleY; }
+    glm::mat4 GetModelMatrix() const;
+
+    float GetPosX() const { return posX; }
+    float GetPosY() const { return posY; }
+    float GetRotation() const { return rotation; }
+    float GetScaleX() const { return scaleX; }
+    float GetScaleY() const { return scaleY; }
 };

@@ -13,4 +13,5 @@ protected:
 private:
     Shape* triangle1 = nullptr;
     Shape* square1 = nullptr;
+    float elapsedTime = 0.0f;
 };

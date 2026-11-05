@@ -34,19 +34,30 @@ void Window::SwapBuffers()
     }
 }
 
+void Window::GetFramebufferSize(int& width, int& height) const
+{
+    if (windowHandle)
+        glfwGetFramebufferSize(windowHandle, &width, &height);
+    else
+    {
+        width = 0;
+        height = 0;
+    }
+}
+
 bool Window::ShouldClose() const
 {
     return glfwWindowShouldClose(windowHandle);
 }
 
-void Window::PollEvents() 
+void Window::PollEvents()
 {
     glfwPollEvents();
 }
 
-void Window::Destroy() 
+void Window::Destroy()
 {
-    if (windowHandle) 
+    if (windowHandle)
     {
         glfwDestroyWindow(windowHandle);
         windowHandle = nullptr;

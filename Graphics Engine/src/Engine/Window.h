@@ -14,6 +14,7 @@ public:
     bool ShouldClose() const;
     void PollEvents();
     void SwapBuffers();
+    void GetFramebufferSize(int& width, int& height) const;
     GLFWwindow* GetHandle() const { return windowHandle; }
     void Destroy();
 };

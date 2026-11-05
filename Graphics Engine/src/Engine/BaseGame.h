@@ -4,6 +4,7 @@
 #include "Window.h"
 #include "Renderer.h"
 #include "Shape.h"
+#include "Camera2D.h"
 
 #include <memory>
 #include <vector>
@@ -30,11 +31,14 @@ protected:
     virtual void OnRender() {}
     virtual void OnDeInit() {}
 
+    Camera2D& GetCamera();
+
     Shape* CreateTriangle(float r, float g, float b);
     Shape* CreateSquare(float r, float g, float b);
 
     Window window;
     Renderer renderer;
+    Camera2D camera;
 
     std::vector<std::unique_ptr<Entity>> entities;
 };
