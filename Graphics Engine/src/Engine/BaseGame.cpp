@@ -15,6 +15,11 @@ Camera2D& BaseGame::GetCamera()
     return camera;
 }
 
+bool BaseGame::GetKey(Key key) const
+{
+    return input.IsKeyDown(key);
+}
+
 
 bool BaseGame::Startup(int width, int height, const char* title)
 {
@@ -38,6 +43,8 @@ bool BaseGame::Startup(int width, int height, const char* title)
     int framebufferHeight = 0;
     window.GetFramebufferSize(framebufferWidth, framebufferHeight);
     camera.SetViewportSize(framebufferWidth, framebufferHeight);
+
+    input.Init(window);
 
     OnInit();
 

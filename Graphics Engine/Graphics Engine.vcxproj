@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\Camera2D.cpp" />
+    <ClCompile Include="src\Engine\Input.cpp" />
     <ClCompile Include="src\Engine\Shape.cpp" />
     <ClCompile Include="src\Engine\VAO-VBO-IBO\IndexBuffer.cpp" />
     <ClCompile Include="src\Engine\BaseGame.cpp" />
@@ -154,6 +155,8 @@
   <ItemGroup>
     <ClInclude Include="src\Engine\Camera2D.h" />
     <ClInclude Include="src\Engine\EngineAPI.h" />
+    <ClInclude Include="src\Engine\Input.h" />
+    <ClInclude Include="src\Engine\KeyCodes.h" />
     <ClInclude Include="src\Engine\Shape.h" />
     <ClInclude Include="src\Engine\VAO-VBO-IBO\IndexBuffer.h" />
     <ClInclude Include="src\Engine\BaseGame.h" />
