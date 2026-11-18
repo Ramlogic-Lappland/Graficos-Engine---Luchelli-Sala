@@ -1,0 +1,233 @@
+#include "BaseGame.h"
+
+#include <chrono>
+#include <memory>
+#include <utility>
+#include <vector>
+#include <iostream>
+
+BaseGame::BaseGame() = default;
+
+BaseGame::~BaseGame() = default;
+
+Camera2D& BaseGame::GetCamera()
+{
+    return camera;
+}
+
+bool BaseGame::GetKey(Key key) const
+{
+    return input.IsKeyDown(key);
+}
+
+
+bool BaseGame::Startup(int width, int height, const char* title)
+{
+    if (!window.Init(width, height, title))
+    {
+        std::cerr << "Failed to initialize Window!\n";
+        return false;
+    }
+
+    if (!renderer.Init(&window))
+    {
+        std::cerr << "Failed to initialize Renderer!\n";
+
+        renderer.Shutdown();
+        window.Destroy();
+
+        return false;
+    }
+
+    int framebufferWidth = 0;
+    int framebufferHeight = 0;
+    window.GetFramebufferSize(framebufferWidth, framebufferHeight);
+    camera.SetViewportSize(framebufferWidth, framebufferHeight);
+
+    input.Init(window);
+
+    OnInit();
+
+    return true;
+}
+
+
+void BaseGame::Run()
+{
+    using Clock = std::chrono::steady_clock;
+
+    auto previousTime = Clock::now();
+
+    while (!window.ShouldClose())
+    {
+        auto currentTime = Clock::now();
+
+        float deltaTime = std::chrono::duration<float>(currentTime - previousTime).count();
+
+        previousTime = currentTime;
+
+        window.PollEvents();
+
+        // KeepDelta
+        OnUpdate(deltaTime);
+
+        // Update all active entities
+        const size_t updateCount = entities.size();
+
+        for (size_t i = 0; i < updateCount; i++)
+        {
+            if (entities[i]->IsActive())
+            {
+                entities[i]->Update(deltaTime);
+            }
+        }
+
+        // Collect active entities with collision enabled
+        std::vector<Entity2D*> colliders;
+
+        for (auto& entity : entities)
+        {
+            if (!entity->IsActive())
+                continue;
+
+            Entity2D* entity2D = dynamic_cast<Entity2D*>(entity.get());
+
+            if (entity2D && entity2D->IsCollisionEnabled())
+            {
+                colliders.push_back(entity2D);
+            }
+        }
+
+        // Detect and resolve collisions
+        const auto contacts = collisionManager.Update(colliders);
+
+        for (const auto& contact : contacts)
+        {
+            OnCollision(*contact.first, *contact.second);
+        }
+
+        int framebufferWidth = 0;
+        int framebufferHeight = 0;
+        window.GetFramebufferSize(framebufferWidth, framebufferHeight);
+        camera.SetViewportSize(framebufferWidth, framebufferHeight);
+
+        renderer.Clear(0.1f, 0.1f, 0.1f, 1.0f);
+        renderer.ApplyCamera(camera);
+
+        // Draw all active entities
+        const size_t drawCount = entities.size();
+
+        for (size_t i = 0; i < drawCount; i++)
+        {
+            if (entities[i]->IsActive())
+            {
+                entities[i]->Draw(renderer);
+            }
+        }
+
+        OnRender();
+
+        window.SwapBuffers();
+    }
+
+    OnDeInit();
+
+    // Rclean gpu resources before destroying OpenGL context
+    entities.clear();
+    textureCache.clear();
+
+    renderer.Shutdown();
+    window.Destroy();
+}
+
+
+Shape* BaseGame::CreateTriangle(float r, float g, float b)
+{
+    std::vector<float> vertices =
+    {
+        -0.5f, -0.5f,
+         0.5f, -0.5f,
+         0.0f,  0.5f
+    };
+
+    std::vector<unsigned int> indices =
+    {
+        0, 1, 2
+    };
+
+    auto shape = std::make_unique<Shape>
+        (
+            vertices,
+            indices,
+            r, g, b
+        );
+
+    Shape* result = shape.get();
+
+    entities.push_back(std::move(shape));
+
+    return result;
+}
+
+
+Shape* BaseGame::CreateSquare(float r, float g, float b)
+{
+    std::vector<float> vertices =
+    {
+        -0.5f, -0.5f,
+         0.5f, -0.5f,
+         0.5f,  0.5f,
+        -0.5f,  0.5f
+    };
+
+    std::vector<unsigned int> indices =
+    {
+        0, 1, 2,
+        2, 3, 0
+    };
+
+    auto shape = std::make_unique<Shape>
+        (
+            vertices,
+            indices,
+            r, g, b
+        );
+
+    Shape* result = shape.get();
+
+    entities.push_back(std::move(shape));
+
+    return result;
+}
+
+Sprite* BaseGame::CreateSprite(const char* path)
+{
+    if (path == nullptr || path[0] == '\0')
+        return nullptr;
+
+    const std::string key(path);
+    std::shared_ptr<Texture2D> texture;
+
+    auto cached = textureCache.find(key);
+    if (cached != textureCache.end())
+        texture = cached->second.lock();
+
+    if (!texture)
+    {
+        texture = std::make_shared<Texture2D>();
+        if (!texture->LoadFromFile(key))
+            return nullptr;
+
+        textureCache[key] = texture;
+    }
+
+    auto sprite = std::make_unique<Sprite>(texture);
+    sprite->SetScale(
+        static_cast<float>(texture->GetWidth()) / texture->GetHeight(),
+        1.0f
+    );
+
+    Sprite* result = sprite.get();
+    entities.push_back(std::move(sprite));
+    return result;
+}
