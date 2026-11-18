@@ -15,6 +15,7 @@ void Game::OnInit()
     square1->SetPosition(0.9f, 0.0f);
     square1->SetScale(0.7f, 0.7f);
 
+
     // Camera uses world units is not normalized
     GetCamera().SetPosition(0.0f, 0.0f);
     GetCamera().SetVerticalSize(3.0f);
@@ -24,10 +25,14 @@ void Game::OnInit()
 
     if (sprite1)
     {
-        sprite1->SetPosition(0.0f, 0.0f);
+        sprite1->SetPosition(2.0f, 0.0f);
         sprite1->SetRotation(0.0f);
         sprite1->SetTint(1.0f, 1.0f, 1.0f, 1.0f);
-        sprite1->SetActive(false); // deactivated to test
+        sprite1->SetActive(true); // deactivated to test
+        sprite1->SetCollisionEnabled(true);
+        sprite1->SetCollisionBox(1.0f, 1.0f);
+        sprite1->SetWeight(1.0f);
+        //sprite1->SetStaticCollider(true); you can make it static instead of assigning weight to it
     }
 
     padoruSprite = CreateSprite("res/sprites/PadoruSpriteSheet.png"); // Padoru Animation
@@ -52,6 +57,10 @@ void Game::OnInit()
 
     padoruSprite->SetPosition(0.0f, 0.0f);
     padoruSprite->SetFrame(0, 0); // Idle: display only first frame
+    padoruSprite->SetCollisionEnabled(true);
+    padoruSprite->SetCollisionBox(1.0f, 1.0f);
+    padoruSprite->SetWeight(1.0f);
+    
 }
 
 void Game::OnUpdate(float deltaTime)
@@ -62,6 +71,8 @@ void Game::OnUpdate(float deltaTime)
 
     // WASD moves the triangle
     glm::vec2 shapeDirection(0.0f);
+
+    /* CODE THAT MOVED THE TRIANGLE
     if (GetKey(Key::A)) shapeDirection.x -= 1.0f;
     if (GetKey(Key::D)) shapeDirection.x += 1.0f;
     if (GetKey(Key::S)) shapeDirection.y -= 1.0f;
@@ -75,7 +86,7 @@ void Game::OnUpdate(float deltaTime)
             triangle1->GetPosX() + shapeDirection.x * shapeSpeed * deltaTime,
             triangle1->GetPosY() + shapeDirection.y * shapeSpeed * deltaTime
         );
-    }
+    }*/
 
     // Arrow keys move camera 
     glm::vec2 cameraDirection(0.0f);

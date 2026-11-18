@@ -82,6 +82,30 @@ void BaseGame::Run()
             }
         }
 
+        // Collect active entities with collision enabled
+        std::vector<Entity2D*> colliders;
+
+        for (auto& entity : entities)
+        {
+            if (!entity->IsActive())
+                continue;
+
+            Entity2D* entity2D = dynamic_cast<Entity2D*>(entity.get());
+
+            if (entity2D && entity2D->IsCollisionEnabled())
+            {
+                colliders.push_back(entity2D);
+            }
+        }
+
+        // Detect and resolve collisions
+        const auto contacts = collisionManager.Update(colliders);
+
+        for (const auto& contact : contacts)
+        {
+            OnCollision(*contact.first, *contact.second);
+        }
+
         int framebufferWidth = 0;
         int framebufferHeight = 0;
         window.GetFramebufferSize(framebufferWidth, framebufferHeight);

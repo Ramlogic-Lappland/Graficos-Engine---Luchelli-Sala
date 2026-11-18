@@ -7,6 +7,7 @@
 #include "Sprite.h"
 #include "Camera2D.h"
 #include "Input.h"
+#include "CollisionManager.h"
 
 #include <memory>
 #include <vector>
@@ -34,6 +35,7 @@ protected:
     virtual void OnUpdate(float deltaTime) {}
     virtual void OnRender() {}
     virtual void OnDeInit() {}
+    virtual void OnCollision(Entity2D& first, Entity2D& second) {}
 
     Camera2D& GetCamera();
     bool GetKey(Key key) const;
@@ -46,6 +48,7 @@ protected:
     Renderer renderer;
     Camera2D camera;
     Input input;
+    CollisionManager collisionManager;
 
     std::vector<std::unique_ptr<Entity>> entities;
     std::unordered_map<std::string, std::weak_ptr<Texture2D>> textureCache;
