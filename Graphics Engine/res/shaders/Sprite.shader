@@ -9,11 +9,12 @@ out vec2 v_TexCoord;
 uniform mat4 u_Model;
 uniform mat4 u_View;
 uniform mat4 u_Projection;
+uniform vec4 u_UVRect;
 
 void main()
 {
     gl_Position = u_Projection * u_View * u_Model * vec4(position, 0.0, 1.0);
-    v_TexCoord = texCoord;
+    v_TexCoord = texCoord * u_UVRect.zw + u_UVRect.xy;
 }
 
 #shader fragment

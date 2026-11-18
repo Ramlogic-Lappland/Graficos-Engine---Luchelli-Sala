@@ -37,5 +37,6 @@ private:
     int spriteViewLocation = -1;
     int spriteProjectionLocation = -1;
     int spriteTintLocation = -1;
+    int spriteUVRectLocation = -1;
     int spriteSamplerLocation = -1;
 };

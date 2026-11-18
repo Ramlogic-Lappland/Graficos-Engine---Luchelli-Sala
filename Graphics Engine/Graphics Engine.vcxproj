@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Engine\Animation.cpp" />
     <ClCompile Include="src\Engine\Sprite.cpp" />
     <ClCompile Include="src\Engine\Camera2D.cpp" />
     <ClCompile Include="src\Engine\Input.cpp" />
@@ -155,6 +156,7 @@
     <ClCompile Include="src\Engine\Texture2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Engine\Animation.h" />
     <ClInclude Include="src\Engine\Sprite.h" />
     <ClInclude Include="src\Engine\Camera2D.h" />
     <ClInclude Include="src\Engine\EngineAPI.h" />

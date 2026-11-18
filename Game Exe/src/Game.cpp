@@ -1,6 +1,7 @@
 #include "Game.h"
 #include <cmath>
 #include <time.h>
+#include <iostream>
 
 void Game::OnInit()
 {
@@ -19,14 +20,38 @@ void Game::OnInit()
     GetCamera().SetVerticalSize(3.0f);
     GetCamera().SetZoom(1.0f);
 
-    sprite1 = CreateSprite("res/sprites/PadoruSprite.png");
+    sprite1 = CreateSprite("res/sprites/PadoruSprite.png"); // padoru Static
 
     if (sprite1)
     {
         sprite1->SetPosition(0.0f, 0.0f);
         sprite1->SetRotation(0.0f);
         sprite1->SetTint(1.0f, 1.0f, 1.0f, 1.0f);
+        sprite1->SetActive(false); // deactivated to test
     }
+
+    padoruSprite = CreateSprite("res/sprites/PadoruSpriteSheet.png"); // Padoru Animation
+    if (!padoruSprite)
+    {
+        std::cerr << "Could not create Padoru sprite!\n";
+        return;
+    }
+
+    // Tell the sprite how its atlas is divided before adding animations.
+    if (!padoruSprite->SetSpriteSheet(4, 1))
+    {
+        std::cerr << "Padoru sprite sheet must have 4 equal columns!\n";
+        return;
+    }
+
+    if (!padoruSprite->AddAnimation("Spin", 0, 4, 6.0f, true))
+    {
+        std::cerr << "Could not register Spin animation!\n";
+        return;
+    }
+
+    padoruSprite->SetPosition(0.0f, 0.0f);
+    padoruSprite->SetFrame(0, 0); // Idle: display only first frame
 }
 
 void Game::OnUpdate(float deltaTime)
@@ -82,6 +107,43 @@ void Game::OnUpdate(float deltaTime)
 
     if (square1)
         square1->SetRotation(square1->GetRotation() + 45.0f * deltaTime);
+
+    // PADORU ANIMATION CODE =======================================
+    if (padoruSprite == nullptr)
+        return;
+
+    const float speed = 2.0f;
+
+    float dx = 0.0f;
+    float dy = 0.0f;
+
+    if (GetKey(Key::W)) dy += 1.0f;
+    if (GetKey(Key::S)) dy -= 1.0f;
+    if (GetKey(Key::A)) dx -= 1.0f;
+    if (GetKey(Key::D)) dx += 1.0f;
+
+    bool isMoving = (dx != 0.0f || dy != 0.0f);
+
+    if (isMoving)
+    {
+        // Normalize diagonal movement
+        float length = std::sqrt(dx * dx + dy * dy);
+        dx /= length;
+        dy /= length;
+
+        padoruSprite->SetPosition
+        (
+            padoruSprite->GetPosX() + dx * speed * deltaTime,
+            padoruSprite->GetPosY() + dy * speed * deltaTime
+        );
+
+        padoruSprite->PlayAnimation("Spin");
+    }
+    else
+    {
+        // Stop animation and return to the first frame
+        padoruSprite->StopAnimation();
+    }
 }
 
 void Game::OnRender()

@@ -251,11 +251,12 @@ bool Renderer::Init(Window* window)
     spriteViewLocation = glGetUniformLocation(spriteShader, "u_View");
     spriteProjectionLocation = glGetUniformLocation(spriteShader, "u_Projection");
     spriteTintLocation = glGetUniformLocation(spriteShader, "u_Tint");
+    spriteUVRectLocation = glGetUniformLocation(spriteShader, "u_UVRect");
     spriteSamplerLocation = glGetUniformLocation(spriteShader, "u_Texture");
 
-    if (spriteModelLocation == -1 || spriteViewLocation == -1 ||spriteProjectionLocation == -1 || spriteTintLocation == -1 ||spriteSamplerLocation == -1)
+    if (spriteModelLocation == -1 || spriteViewLocation == -1 || spriteProjectionLocation == -1 || spriteTintLocation == -1 || spriteUVRectLocation == -1 || spriteSamplerLocation == -1)
     {
-        std::cerr << "Required sprite shader uniform missing!\n";
+        std::cerr << "Required sprite shader uniform missing (check u_UVRect)!\n";
         Shutdown();
         return false;
     }
@@ -360,6 +361,9 @@ void Renderer::Draw(const Sprite& sprite) //Sprite Draw
     glUniformMatrix4fv(spriteModelLocation, 1, GL_FALSE, glm::value_ptr(model));
     glUniform4fv(spriteTintLocation, 1, glm::value_ptr(sprite.GetTint()));
 
+    const glm::vec4 uvRect = sprite.GetUVRect();
+    glUniform4fv(spriteUVRectLocation, 1, glm::value_ptr(uvRect));
+
     sprite.GetTexture().Bind(0);
     sprite.GetVertexArray().Bind();
 
@@ -395,6 +399,7 @@ void Renderer::Shutdown()
     spriteViewLocation = -1;
     spriteProjectionLocation = -1;
     spriteTintLocation = -1;
+    spriteUVRectLocation = -1;
     spriteSamplerLocation = -1;
 
     colorLocation = -1;
