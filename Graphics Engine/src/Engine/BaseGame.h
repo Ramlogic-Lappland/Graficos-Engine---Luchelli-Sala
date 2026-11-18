@@ -4,11 +4,14 @@
 #include "Window.h"
 #include "Renderer.h"
 #include "Shape.h"
+#include "Sprite.h"
 #include "Camera2D.h"
 #include "Input.h"
 
 #include <memory>
 #include <vector>
+#include <string>
+#include <unordered_map>
 
 class ENGINE_API BaseGame
 {
@@ -37,6 +40,7 @@ protected:
 
     Shape* CreateTriangle(float r, float g, float b);
     Shape* CreateSquare(float r, float g, float b);
+    Sprite* CreateSprite(const char* path);
 
     Window window;
     Renderer renderer;
@@ -44,4 +48,5 @@ protected:
     Input input;
 
     std::vector<std::unique_ptr<Entity>> entities;
+    std::unordered_map<std::string, std::weak_ptr<Texture2D>> textureCache;
 };

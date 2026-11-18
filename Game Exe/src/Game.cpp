@@ -18,6 +18,15 @@ void Game::OnInit()
     GetCamera().SetPosition(0.0f, 0.0f);
     GetCamera().SetVerticalSize(3.0f);
     GetCamera().SetZoom(1.0f);
+
+    sprite1 = CreateSprite("res/sprites/PadoruSprite.png");
+
+    if (sprite1)
+    {
+        sprite1->SetPosition(0.0f, 0.0f);
+        sprite1->SetRotation(0.0f);
+        sprite1->SetTint(1.0f, 1.0f, 1.0f, 1.0f);
+    }
 }
 
 void Game::OnUpdate(float deltaTime)

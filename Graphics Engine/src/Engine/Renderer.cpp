@@ -1,6 +1,7 @@
 #include "Renderer.h"
 #include "Window.h"
 #include "Shape.h"
+#include "Sprite.h"
 #include "Camera2D.h"
 
 #include <GL/glew.h>
@@ -37,8 +38,7 @@ namespace
 
         if (!stream.is_open())
         {
-            std::cerr << "Failed to open shader: "
-                << filepath << std::endl;
+            std::cerr << "Failed to open shader: "<< filepath << std::endl;
             return {};
         }
 
@@ -186,9 +186,7 @@ bool Renderer::Init(Window* window)
 
     if (glewError != GLEW_OK)
     {
-        std::cerr << "Failed to initialize GLEW: "
-            << glewGetErrorString(glewError)
-            << std::endl;
+        std::cerr << "Failed to initialize GLEW: "<< glewGetErrorString(glewError)<< std::endl;
         return false;
     }
 
@@ -220,8 +218,7 @@ bool Renderer::Init(Window* window)
 
     if (shader == 0)
     {
-        std::cerr << "Failed to create shader program!"
-            << std::endl;
+        std::cerr << "Failed to create shader program!"<< std::endl;
         return false;
     }
 
@@ -232,9 +229,44 @@ bool Renderer::Init(Window* window)
 
     if (colorLocation == -1)
     {
-        std::cerr << "Warning: u_Color not found!"
-            << std::endl;
+        std::cerr << "Warning: u_Color not found!" << std::endl;
     }
+
+    ShaderProgramSource spriteSource = ParseShader("res/shaders/Sprite.shader");
+    if (spriteSource.VertexSource.empty() || spriteSource.FragmentSource.empty())
+    {
+        std::cerr << "Sprite shader source is empty!\n";
+        Shutdown();
+        return false;
+    }
+
+    spriteShader = CreateShader(spriteSource.VertexSource, spriteSource.FragmentSource);
+    if (spriteShader == 0)
+    {
+        Shutdown();
+        return false;
+    }
+
+    spriteModelLocation = glGetUniformLocation(spriteShader, "u_Model");
+    spriteViewLocation = glGetUniformLocation(spriteShader, "u_View");
+    spriteProjectionLocation = glGetUniformLocation(spriteShader, "u_Projection");
+    spriteTintLocation = glGetUniformLocation(spriteShader, "u_Tint");
+    spriteSamplerLocation = glGetUniformLocation(spriteShader, "u_Texture");
+
+    if (spriteModelLocation == -1 || spriteViewLocation == -1 ||spriteProjectionLocation == -1 || spriteTintLocation == -1 ||spriteSamplerLocation == -1)
+    {
+        std::cerr << "Required sprite shader uniform missing!\n";
+        Shutdown();
+        return false;
+    }
+
+    glUseProgram(spriteShader);
+    glUniform1i(spriteSamplerLocation, 0);
+    glUseProgram(0);
+
+    // alpha blend keepos transparency in png sprites.
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     return true;
 }
@@ -262,8 +294,16 @@ void Renderer::ApplyCamera(const Camera2D& camera)
     if (projectionLocation != -1)
         glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(projection));
 
+    if (spriteShader != 0)
+    {
+        glUseProgram(spriteShader);
+        glUniformMatrix4fv(spriteViewLocation, 1, GL_FALSE, glm::value_ptr(view));
+        glUniformMatrix4fv(spriteProjectionLocation, 1, GL_FALSE, glm::value_ptr(projection));
+    }
+
     glUseProgram(0);
 }
+
 
 // Draw an already defined SHAPE
 void Renderer::Draw(const Shape& shape)
@@ -287,7 +327,7 @@ void Renderer::Draw(const Shape& shape)
         );
     }
 
-    // Upload this shape's model matrix before issuing its draw call.
+    // Upload shape model matrix before calling its draw call.
     if (modelLocation != -1)
     {
         const glm::mat4 model = shape.GetModelMatrix();
@@ -299,14 +339,40 @@ void Renderer::Draw(const Shape& shape)
     glDrawElements
     (
         GL_TRIANGLES,
-        static_cast<GLsizei>(
-            shape.GetIndexBuffer().GetCount()),
+        static_cast<GLsizei>(shape.GetIndexBuffer().GetCount()),
         GL_UNSIGNED_INT,
         nullptr
     );
 
     shape.GetVertexArray().Unbind();
 
+    glUseProgram(0);
+}
+
+void Renderer::Draw(const Sprite& sprite) //Sprite Draw
+{
+    if (spriteShader == 0)
+        return;
+
+    glUseProgram(spriteShader);
+
+    const glm::mat4 model = sprite.GetModelMatrix();
+    glUniformMatrix4fv(spriteModelLocation, 1, GL_FALSE, glm::value_ptr(model));
+    glUniform4fv(spriteTintLocation, 1, glm::value_ptr(sprite.GetTint()));
+
+    sprite.GetTexture().Bind(0);
+    sprite.GetVertexArray().Bind();
+
+    glDrawElements
+    (
+        GL_TRIANGLES,
+        static_cast<GLsizei>(sprite.GetIndexBuffer().GetCount()),
+        GL_UNSIGNED_INT,
+        nullptr
+    );
+
+    sprite.GetVertexArray().Unbind();
+    glBindTexture(GL_TEXTURE_2D, 0);
     glUseProgram(0);
 }
 
@@ -318,6 +384,18 @@ void Renderer::Shutdown()
         glDeleteProgram(shader);
         shader = 0;
     }
+
+    if (spriteShader != 0)
+    {
+        glDeleteProgram(spriteShader);
+        spriteShader = 0;
+    }
+
+    spriteModelLocation = -1;
+    spriteViewLocation = -1;
+    spriteProjectionLocation = -1;
+    spriteTintLocation = -1;
+    spriteSamplerLocation = -1;
 
     colorLocation = -1;
     modelLocation = -1;

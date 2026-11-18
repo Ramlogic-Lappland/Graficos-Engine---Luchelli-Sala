@@ -4,8 +4,7 @@
 #include <GL/glew.h>
 
 Shape::Shape(const std::vector<float>& vertices,const std::vector<unsigned int>& indices,float r,float g,float b):
-    Entity2D(),vertexBuffer(vertices.data(), static_cast<unsigned int>(vertices.size() * sizeof(float))),indexBuffer(indices.data(),
-        static_cast<unsigned int>(indices.size())),color{ r, g, b, 1.0f }
+    Entity2D(),vertexBuffer(vertices.data(), static_cast<unsigned int>(vertices.size() * sizeof(float))),indexBuffer(indices.data(), static_cast<unsigned int>(indices.size())),color{ r, g, b, 1.0f }
 {
     vertexArray.Bind();
     vertexBuffer.Bind();

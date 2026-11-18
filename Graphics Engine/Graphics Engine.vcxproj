@@ -76,7 +76,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC;WIN32;ENGINE_BUILD;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)ENGINE_BUILDENGINE_BUILD</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Graphics Engine\src;$(SolutionDir)Dependencies\glew-2.3.1\include;$(SolutionDir)Dependencies\glfw-WIN32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Graphics Engine\src\Engine\ThirdParty;$(SolutionDir)Graphics Engine\src;$(SolutionDir)Dependencies\glew-2.3.1\include;$(SolutionDir)Dependencies\glfw-WIN32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -94,7 +94,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC;WIN32;ENGINE_BUILD;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)ENGINE_BUILDENGINE_BUILD</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Graphics Engine\src;$(SolutionDir)Dependencies\glew-2.3.1\include;$(SolutionDir)Dependencies\glfw-WIN32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Graphics Engine\src\Engine\ThirdParty;$(SolutionDir)Graphics Engine\src;$(SolutionDir)Dependencies\glew-2.3.1\include;$(SolutionDir)Dependencies\glfw-WIN32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -113,7 +113,7 @@
       <PreprocessorDefinitions>ENGINE_BUILD;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);ENGINE_BUILDENGINE_BUILD</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Graphics Engine\src;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Graphics Engine\src\Engine\ThirdParty;$(SolutionDir)Graphics Engine\src;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -129,7 +129,7 @@
       <PreprocessorDefinitions>ENGINE_BUILD;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);ENGINE_BUILDENGINE_BUILD</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Graphics Engine\src;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Graphics Engine\src\Engine\ThirdParty;$(SolutionDir)Graphics Engine\src;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Engine\Sprite.cpp" />
     <ClCompile Include="src\Engine\Camera2D.cpp" />
     <ClCompile Include="src\Engine\Input.cpp" />
     <ClCompile Include="src\Engine\Shape.cpp" />
@@ -151,13 +152,16 @@
     <ClCompile Include="src\Engine\VAO-VBO-IBO\VertexArray.cpp" />
     <ClCompile Include="src\Engine\VAO-VBO-IBO\VertexBuffer.cpp" />
     <ClCompile Include="src\glm\detail\glm.cpp" />
+    <ClCompile Include="src\Engine\Texture2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Engine\Sprite.h" />
     <ClInclude Include="src\Engine\Camera2D.h" />
     <ClInclude Include="src\Engine\EngineAPI.h" />
     <ClInclude Include="src\Engine\Input.h" />
     <ClInclude Include="src\Engine\KeyCodes.h" />
     <ClInclude Include="src\Engine\Shape.h" />
+    <ClInclude Include="src\Engine\ThirdParty\stb_image.h" />
     <ClInclude Include="src\Engine\VAO-VBO-IBO\IndexBuffer.h" />
     <ClInclude Include="src\Engine\BaseGame.h" />
     <ClInclude Include="src\Engine\Entity.h" />
@@ -456,8 +460,11 @@
     <ClInclude Include="src\glm\vec3.hpp" />
     <ClInclude Include="src\glm\vec4.hpp" />
     <ClInclude Include="src\glm\vector_relational.hpp" />
+    <ClInclude Include="src\Engine\Texture2D.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\shaders\Shader.shader" />
+    <None Include="res\shaders\Sprite.shader" />
     <None Include="src\glm\detail\func_common.inl" />
     <None Include="src\glm\detail\func_common_simd.inl" />
     <None Include="src\glm\detail\func_exponential.inl" />

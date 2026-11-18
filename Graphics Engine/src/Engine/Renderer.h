@@ -4,6 +4,7 @@
 
 class Window;
 class Shape;
+class Sprite;
 class Camera2D;
 
 class ENGINE_API Renderer
@@ -22,6 +23,7 @@ public:
 
     void ApplyCamera(const Camera2D& camera);
     void Draw(const Shape& shape);
+    void Draw(const Sprite& sprite);
 
 private:
     unsigned int shader = 0;
@@ -29,4 +31,11 @@ private:
     int modelLocation = -1;
     int viewLocation = -1;
     int projectionLocation = -1;
+
+    unsigned int spriteShader = 0;
+    int spriteModelLocation = -1;
+    int spriteViewLocation = -1;
+    int spriteProjectionLocation = -1;
+    int spriteTintLocation = -1;
+    int spriteSamplerLocation = -1;
 };

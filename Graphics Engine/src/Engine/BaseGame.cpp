@@ -108,8 +108,9 @@ void BaseGame::Run()
 
     OnDeInit();
 
-    // Release GPU resources before destroying OpenGL context
+    // Rclean gpu resources before destroying OpenGL context
     entities.clear();
+    textureCache.clear();
 
     renderer.Shutdown();
     window.Destroy();
@@ -172,5 +173,37 @@ Shape* BaseGame::CreateSquare(float r, float g, float b)
 
     entities.push_back(std::move(shape));
 
+    return result;
+}
+
+Sprite* BaseGame::CreateSprite(const char* path)
+{
+    if (path == nullptr || path[0] == '\0')
+        return nullptr;
+
+    const std::string key(path);
+    std::shared_ptr<Texture2D> texture;
+
+    auto cached = textureCache.find(key);
+    if (cached != textureCache.end())
+        texture = cached->second.lock();
+
+    if (!texture)
+    {
+        texture = std::make_shared<Texture2D>();
+        if (!texture->LoadFromFile(key))
+            return nullptr;
+
+        textureCache[key] = texture;
+    }
+
+    auto sprite = std::make_unique<Sprite>(texture);
+    sprite->SetScale(
+        static_cast<float>(texture->GetWidth()) / texture->GetHeight(),
+        1.0f
+    );
+
+    Sprite* result = sprite.get();
+    entities.push_back(std::move(sprite));
     return result;
 }
